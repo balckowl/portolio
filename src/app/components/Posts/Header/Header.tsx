@@ -57,7 +57,7 @@ const Header = ({ title, content }: { title: string, content: string }) => {
                                 </div>
                             </PopoverTrigger>
                             <PopoverContent className="w-full p-0">
-                                <Picker data={data} onEmojiSelect={(emoji: any) => setEmoji(emoji.native)} />
+                                <Picker data={data} onEmojiSelect={(emoji: any) => {setEmoji(emoji.native); console.log(emoji)}} />
                             </PopoverContent>
                             <Button onClick={handleSubmit}>投稿する</Button>
                         </Popover>
