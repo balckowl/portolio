@@ -5,6 +5,15 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import { AlignJustify } from "lucide-react"
 import Link from "next/link"
 
 
@@ -16,7 +25,23 @@ const Header = () => {
                 <h1 className="text-4xl font-bold">
                     <Link href="/y_ta">Portolio</Link>
                 </h1>
-                <div className="flex items-center gap-10">
+                <div className="block lg:hidden">
+                    <Sheet>
+                        <SheetTrigger>
+                            <AlignJustify />
+                        </SheetTrigger>
+                        <SheetContent>
+                            <SheetHeader>
+                                <SheetTitle>Are you absolutely sure?</SheetTitle>
+                                <SheetDescription>
+                                    This action cannot be undone. This will permanently delete your account
+                                    and remove your data from our servers.
+                                </SheetDescription>
+                            </SheetHeader>
+                        </SheetContent>
+                    </Sheet>
+                </div>
+                <div className="lg:flex items-center gap-10 hidden">
                     <Popover>
                         <PopoverTrigger>
                             <Avatar>

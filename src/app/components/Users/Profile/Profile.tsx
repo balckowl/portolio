@@ -53,18 +53,18 @@ const Profile = () => {
         <div>
             <div className="container flex justify-center">
                 <Toaster />
-                <div className="w-[60%] pb-[100px]">
+                <div className="w-full lg:w-[60%] pb-[100px]">
                     <div className="py-[30px]">
                         <h2 className="text-[30px] font-bold text-center">Profile</h2>
                     </div>
-                    <div className="bg-white flex px-5 py-10 gap-3 rounded-[5px]">
-                        <div className="w-[30%] flex justify-center">
+                    <div className="bg-white lg:flex px-5 py-10 gap-3 rounded-[5px]">
+                        <div className="w-full lg:w-[30%] flex justify-center ">
                             <Avatar className="w-[100px] h-[100px]">
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                         </div>
-                        <div className="w-[60%]">
+                        <div className="w-full lg:w-[60%]">
                             <Form {...form}>
                                 <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
                                     <FormField
