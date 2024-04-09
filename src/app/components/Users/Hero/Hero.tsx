@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const Hero = () => {
     return (
@@ -16,7 +17,11 @@ const Hero = () => {
                             <p>青山学院大学大学院１年 | フロントエンドエンジニア | React, Next.js,  Remix | ITパスポート勉強中</p>
                         </div>
                     </div>
-                    <Button>編集する</Button>
+                    <Button>
+                        <Link href="/posts/edit">
+                            編集する
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </div>
