@@ -7,7 +7,7 @@ const Hero = () => {
         <div className="h-[300px]">
             <div className="h-full container flex justify-center border-b-[2px] border-[#eee]">
                 <div className="w-[80%] flex items-center justify-between">
-                    <div className="w-[70%] flex items-center gap-5">
+                    <div className="w-[70%] flex items-center gap-8">
                         <Avatar className="w-[100px] h-[100px]">
                             <AvatarImage src="https://github.com/shadcn.png" />
                             <AvatarFallback>CN</AvatarFallback>
@@ -17,11 +17,11 @@ const Hero = () => {
                             <p>青山学院大学大学院１年 | フロントエンドエンジニア | React, Next.js,  Remix | ITパスポート勉強中</p>
                         </div>
                     </div>
-                    <Button>
-                        <Link href="/posts/edit">
+                    <Link href="/posts/edit">
+                        <Button>
                             編集する
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </div>
