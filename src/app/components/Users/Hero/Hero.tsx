@@ -17,7 +17,7 @@ const Hero = () => {
                             <p>青山学院大学大学院１年 | フロントエンドエンジニア | React, Next.js,  Remix | ITパスポート勉強中</p>
                         </div>
                     </div>
-                    <Link href="/posts/edit">
+                    <Link href="/y_ta/edit">
                         <Button>
                             編集する
                         </Button>

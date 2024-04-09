@@ -13,7 +13,9 @@ const Header = () => {
     return (
         <div className="h-[80px] bg-white">
             <div className="container flex justify-between h-full items-center">
-                <h1 className="text-4xl font-bold">Portolio</h1>
+                <h1 className="text-4xl font-bold">
+                    <Link href="/y_ta">Portolio</Link>
+                </h1>
                 <div className="flex items-center gap-10">
                     <Popover>
                         <PopoverTrigger>

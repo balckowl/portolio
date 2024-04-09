@@ -12,7 +12,7 @@ const Article = () => {
                     <div className="mb-[10px]">
                         <h2 className="text-[30px] font-bold">Reactはなぜ人気なのか？</h2>
                     </div>
-                    <div className="h-[400px] bg-white p-5 rounded-[5px]">
+                    <div className="min-h-[400px] bg-white p-5 rounded-[5px]">
                         <div className="border-[1px] border-[#eee] rounded-[5px] flex justify-between p-3 mb-[10px]">
                             <div className="flex items-center gap-3">
                                 <div>2023/2/11</div>
