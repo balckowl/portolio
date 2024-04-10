@@ -1,3 +1,4 @@
+import { auth, signOut } from "@/auth"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -18,7 +19,16 @@ import Link from "next/link"
 
 
 
-const Header = () => {
+const Header = async () => {
+
+    const session = await auth()
+
+    const logOut = async () => {
+        "use server"
+
+        await signOut({ redirectTo: '/' })
+    }
+
     return (
         <div className="h-[80px] bg-white">
             <div className="container flex justify-between h-full items-center">
@@ -45,15 +55,23 @@ const Header = () => {
                     <Popover>
                         <PopoverTrigger>
                             <Avatar>
-                                <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback>CN</AvatarFallback>
+                                {session?.user?.image && (
+                                    <AvatarImage src={session?.user?.image} alt={session?.user?.name ?? ""} />
+                                )}
+                                <AvatarFallback>{session?.user?.name}</AvatarFallback>
                             </Avatar>
                         </PopoverTrigger>
                         <PopoverContent className="w-full p-0">
-                            <h2 className="p-4 border-b-[1px] border-[#eee] font-bold">ゆーた</h2>
+                            <h2 className="p-4 border-b-[1px] border-[#eee] font-bold">{session?.user?.name}</h2>
                             <ul className="p-4 space-y-4">
-                                <li>プロフィール設定</li>
-                                <li>ログアウト</li>
+                                <Link href={`/${session?.user?.id}/edit`}>
+                                    <li>プロフィール設定</li>
+                                </Link>
+                                <form action={logOut}>
+                                    <button>
+                                        <li>ログアウト</li>
+                                    </button>
+                                </form>
                             </ul>
                         </PopoverContent>
                     </Popover>

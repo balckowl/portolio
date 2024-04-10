@@ -43,7 +43,7 @@ const Header = ({ title, content }: { title: string, content: string }) => {
             <div className="container flex justify-between h-full items-center">
                 <h1 className="text-4xl font-bold">Portolio</h1>
                 <Dialog>
-                    <DialogTrigger className="bg-black text-white px-3 py-2 rounded-[5px]">
+                    <DialogTrigger className="bg-black text-white px-[14px] py-[10px] rounded-[5px] text-[15px]">
                         投稿する
                     </DialogTrigger>
                     <DialogContent>

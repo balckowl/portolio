@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
-const Hero = () => {
+const Hero = async() => {
+
     return (
         <div className="h-[650px] sm:h-[500px] bg-[#eee]">
             <div className="container flex justify-center h-full items-center">
