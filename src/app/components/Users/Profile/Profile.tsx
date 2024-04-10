@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { Textarea } from "@/components/ui/textarea"
 import toast, { Toaster } from "react-hot-toast"
 import { useState } from "react"
+import { useSession } from "next-auth/react"
 
 const formShema = z.object({
     name: z.string().min(2, { message: "名前は2文字以上にしてください" }).max(6, { message: "名前は6文字以下にしてください" }),
@@ -23,6 +24,9 @@ type formType = z.infer<typeof formShema>
 const Profile = () => {
 
     const [isLoading, setIsLoading] = useState(false)
+    const { data: session, status } = useSession()
+
+    console.log(session)
 
     const form = useForm<formType>({
         resolver: zodResolver(formShema),
@@ -49,6 +53,10 @@ const Profile = () => {
         }, 3000)
     }
 
+    if (status === "loading") {
+        return <div>Loading...</div>
+    }
+
     return (
         <div>
             <div className="container flex justify-center">
@@ -60,8 +68,10 @@ const Profile = () => {
                     <div className="bg-white lg:flex px-5 py-10 gap-3 rounded-[5px]">
                         <div className="w-full lg:w-[30%] flex justify-center ">
                             <Avatar className="w-[100px] h-[100px]">
-                                <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback>CN</AvatarFallback>
+                                {session?.user?.image && (
+                                    <AvatarImage src={session.user.image} alt={session.user.name ?? ""} />
+                                )}
+                                <AvatarFallback>{session?.user?.email}</AvatarFallback>
                             </Avatar>
                         </div>
                         <div className="w-full lg:w-[60%]">
@@ -73,7 +83,7 @@ const Profile = () => {
                                             <FormItem>
                                                 <FormLabel>名前</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="ゆーた" {...field} className="focus:outline-none" disabled={isLoading}/>
+                                                    <Input placeholder="ゆーた" {...field} className="focus:outline-none" disabled={isLoading} />
                                                 </FormControl>
                                                 <FormDescription>
                                                     サービスで表示する名前を入力してください
@@ -88,7 +98,7 @@ const Profile = () => {
                                             <FormItem>
                                                 <FormLabel>Bio欄</FormLabel>
                                                 <FormControl>
-                                                    <Textarea placeholder="青山学院大学の大学生です。" {...field} className="resize-none h-[200px] focus:outline-none" disabled={isLoading}/>
+                                                    <Textarea placeholder="青山学院大学の大学生です。" {...field} className="resize-none h-[200px] focus:outline-none" disabled={isLoading} />
                                                 </FormControl>
                                                 <FormDescription>
                                                     Bio欄に表示される内容を入力してください
@@ -105,7 +115,7 @@ const Profile = () => {
                                                 <FormControl>
                                                     <div className="flex items-center gap-2">
                                                         <div>https://twitter.com/</div>
-                                                        <Input placeholder="y_ta" {...field} className="focus:outline-none" disabled={isLoading}/>
+                                                        <Input placeholder="y_ta" {...field} className="focus:outline-none" disabled={isLoading} />
                                                     </div>
                                                 </FormControl>
                                                 <FormDescription>

@@ -3,14 +3,24 @@ import ReactMarkdown from "react-markdown"
 import "../Editer/Edit.css"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Link, RefreshCw } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 const Article = () => {
+
+    const { data: session, status } = useSession()
+
+    console.log(session)
+
+    // if(status === "loading"){
+    //     return <div>loading</div>
+    // }
+
     return (
         <div className="py-[100px] flex justify-center">
             <div className="w-[92%] sm:container flex justify-center">
                 <div className="w-full lg:w-[60%]">
                     <div className="mb-[10px]">
-                        <h2 className="text-[20px] sm:text-[25px] lg:text-[30px] font-bold">Reactはなぜ人気なのか？</h2>
+                        <h2 className="text-[20px] sm:text-[25px] lg:text-[30px] font-bold">Next.jsのApp Routerを挫折した話</h2>
                     </div>
                     <div className="min-h-[400px] bg-white p-5 rounded-[5px]">
                         <div className="border-[1px] border-[#eee] rounded-[5px] flex justify-between p-3 mb-[10px]">
@@ -23,10 +33,12 @@ const Article = () => {
                             </div>
                             <div className="flex items-center gap-3">
                                 <Avatar>
-                                    <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    {status === "authenticated" && session?.user?.image ? (
+                                        <AvatarImage src={session?.user.image} alt={session?.user.name ?? ""} />
+                                    ) : (<></>)}
+                                    <AvatarFallback>{session?.user?.email}</AvatarFallback>
                                 </Avatar>
-                                <p className="hidden sm:block">ゆーた</p>
+                                <p className="hidden sm:block">{session?.user?.name}</p>
                             </div>
                         </div>
                         <div className="preview">
