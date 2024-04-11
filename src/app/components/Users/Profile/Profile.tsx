@@ -72,7 +72,7 @@ const Profile = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ X: x, bio: bio })
+            body: JSON.stringify({ username: name, X: x, bio: bio })
         })
 
         const data = await res.json()
