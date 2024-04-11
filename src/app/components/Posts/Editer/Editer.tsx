@@ -1,14 +1,11 @@
 "use client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import "prism-themes/themes/prism-one-light.min.css"
 import ReactMarkdown from 'react-markdown'
 import Prism from 'prismjs'
 import { marked } from "marked"
-import 'prism-themes/themes/prism-nord.min.css'
 import "./Edit.css"
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react"
 
 
 const Editer = ({ title, content, setTitle, setContent }: { title: string, content: string, setTitle: Function, setContent: Function }) => {

@@ -4,6 +4,18 @@ import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 
 const Start = () => {
+
+    // const getUserData = async() => {
+    //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/hello`)
+
+    //     const data = await res.json()
+
+    //     console.log(data)
+    // }
+
+    // getUserData()
+
+    
     return (
         <div className="pt-[140px] pb-[140px]">
             <div className="container flex justify-center">
