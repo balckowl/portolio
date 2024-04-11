@@ -10,12 +10,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Textarea } from "@/components/ui/textarea"
 import toast, { Toaster } from "react-hot-toast"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const formShema = z.object({
     name: z.string().min(2, { message: "名前は2文字以上にしてください" }).max(6, { message: "名前は6文字以下にしてください" }),
-    bio: z.string().max(30, { message: "30文字以下で入力してください。" }),
+    bio: z.string().max(100, { message: "100文字以下で入力してください。" }),
     x: z.string()
 })
 
@@ -24,36 +25,76 @@ type formType = z.infer<typeof formShema>
 const Profile = () => {
 
     const [isLoading, setIsLoading] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [profileData, setProfileData] = useState({ name: "", bio: "", x: "" });
     const { data: session, status } = useSession()
 
-    console.log(session)
+    const router = useRouter()
+
+    const getUserProfile = async (userId: string) => {
+
+        setIsSubmitting(true)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/${userId}`)
+
+        const data = await res.json()
+
+        setProfileData({ name: data.username, bio: data.bio, x: data.X })
+        setIsSubmitting(true)
+        console.log(profileData)
+    }
+
+    useEffect(() => {
+        if (session) {
+            getUserProfile(String(session?.user?.id))
+        }
+    }, [session])
+
+    useEffect(() => {
+        form.reset(profileData)
+    }, [profileData])
+
 
     const form = useForm<formType>({
         resolver: zodResolver(formShema),
-        defaultValues: {
-            name: "",
-            bio: "",
-            x: ""
-        }
+        defaultValues: profileData
     })
 
-    const onSubmit = (data: formType) => {
-
-        console.log(data)
+    const onSubmit = async (formData: formType) => {
 
         setIsLoading(true)
 
         const loading = toast.loading("送信中...")
 
-        setTimeout(() => {
-            toast.dismiss(loading)
-            setIsLoading(false)
-            toast.success("更新完了")
-            form.reset()
-        }, 3000)
+        const { name, x, bio } = formData
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/${session?.user?.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ X: x, bio: bio })
+        })
+
+        const data = await res.json()
+
+        toast.dismiss(loading)
+        setIsLoading(false)
+        toast.success("更新完了")
+        router.push(`/${session?.user?.id}`)
+        //ページ遷移後、リフレッシュ
+        router.refresh()
+
+        return data
+
+        // setTimeout(() => {
+        //     toast.dismiss(loading)
+        //     setIsLoading(false)
+        //     toast.success("更新完了")
+        //     form.reset()
+        // }, 3000)
     }
 
-    if (status === "loading") {
+    if (!isSubmitting) {
         return <div>Loading...</div>
     }
 
@@ -68,7 +109,7 @@ const Profile = () => {
                     <div className="bg-white lg:flex px-5 py-10 gap-3 rounded-[5px]">
                         <div className="w-full lg:w-[30%] flex justify-center ">
                             <Avatar className="w-[100px] h-[100px]">
-                                {session?.user?.image && (
+                                {status === "authenticated" && session?.user?.image && (
                                     <AvatarImage src={session.user.image} alt={session.user.name ?? ""} />
                                 )}
                                 <AvatarFallback>{session?.user?.email}</AvatarFallback>

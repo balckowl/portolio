@@ -33,7 +33,7 @@ const Header = async () => {
         <div className="h-[80px] bg-white">
             <div className="container flex justify-between h-full items-center">
                 <h1 className="text-4xl font-bold">
-                    <Link href="/y_ta">Portolio</Link>
+                    <Link href="/">Portolio</Link>
                 </h1>
                 <div className="block lg:hidden">
                     <Sheet>
@@ -63,7 +63,10 @@ const Header = async () => {
                         </PopoverTrigger>
                         <PopoverContent className="w-full p-0">
                             <h2 className="p-4 border-b-[1px] border-[#eee] font-bold">{session?.user?.name}</h2>
-                            <ul className="p-4 space-y-4">
+                            <ul className="p-4 flex flex-col gap-3">
+                                <Link href={`/${session?.user?.id}`}>
+                                    <li>My Portolio</li>
+                                </Link>
                                 <Link href={`/${session?.user?.id}/edit`}>
                                     <li>プロフィール設定</li>
                                 </Link>
