@@ -45,11 +45,13 @@ const Hero = async ({ userId }: { userId: string }) => {
                             <p className="text-[13px] sm:text-[16px]">{userProfile.bio}</p>
                         </div>
                     </div>
-                    <Link href={`/${session?.user?.id}/edit`}>
-                        <Button>
-                            編集する
-                        </Button>
-                    </Link>
+                    {session?.user?.id === userId && (
+                        <Link href={`/${session?.user?.id}/edit`}>
+                            <Button>
+                                編集する
+                            </Button>
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
