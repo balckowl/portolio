@@ -19,6 +19,7 @@ const PostList = async ({ userId }: { userId: string }) => {
 
     // const { id } = params
     const PostsData = await getAllPosts(userId)
+    
 
 
     const renderEmoji = (emoji: string) => {
@@ -42,8 +43,8 @@ const PostList = async ({ userId }: { userId: string }) => {
                                             <span className="text-[50px]">{renderEmoji(post.icon)}</span>
                                         )}
                                     </div>
-                                    <div className="bg-white py-5 text-center">
-                                        <h2 className="text-[20px] font-bold">{post.title}</h2>
+                                    <div className={`bg-white py-5 px-5 ${post.title.length < 16 && "text-center"} h-[100px]`}>
+                                        <h2 className={`text-[18px] font-bold`}>{post.title.length > 30 ? `${post.title.substring(0, 30)}...` : post.title}</h2>
                                     </div>
                                 </Link>
                             </div>
