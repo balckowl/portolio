@@ -22,8 +22,6 @@ const Hero = async ({ userId }: { userId: string }) => {
 
     console.log(userProfile)
 
-
-
     return (
         <div className="h-[400px] lg:h-[300px]">
             <div className="h-full container flex justify-center border-b-[2px] border-[#eee]">

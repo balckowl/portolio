@@ -41,13 +41,35 @@ const Header = async () => {
                             <AlignJustify />
                         </SheetTrigger>
                         <SheetContent>
-                            <SheetHeader>
-                                <SheetTitle>Are you absolutely sure?</SheetTitle>
-                                <SheetDescription>
-                                    This action cannot be undone. This will permanently delete your account
-                                    and remove your data from our servers.
-                                </SheetDescription>
-                            </SheetHeader>
+                            <div className="flex items-center gap-5">
+                                <Avatar>
+                                    {session?.user?.image && (
+                                        <AvatarImage src={session?.user?.image} alt={session?.user?.name ?? ""} />
+                                    )}
+                                    <AvatarFallback>{session?.user?.name}</AvatarFallback>
+                                </Avatar>
+                                <div>
+                                    {session?.user?.name}
+                                </div>
+                            </div>
+                            <div>
+                                <ul className="p-4 flex flex-col gap-5">
+                                    <Link href={`/${session?.user?.id}`}>
+                                        <li>My Portolio</li>
+                                    </Link>
+                                    <Link href={`/${session?.user?.id}/edit`}>
+                                        <li>プロフィール設定</li>
+                                    </Link>
+                                    <Link href={`/posts/edit`}>
+                                        <li>記事を投稿</li>
+                                    </Link>
+                                    <form action={logOut}>
+                                        <button>
+                                            <li>ログアウト</li>
+                                        </button>
+                                    </form>
+                                </ul>
+                            </div>
                         </SheetContent>
                     </Sheet>
                 </div>

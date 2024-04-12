@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation"
 const formShema = z.object({
     name: z.string().min(2, { message: "名前は2文字以上にしてください" }).max(6, { message: "名前は6文字以下にしてください" }),
     bio: z.string().max(100, { message: "100文字以下で入力してください。" }),
-    x: z.string()
+    x: z.string().nullable().optional()
 })
 
 type formType = z.infer<typeof formShema>
