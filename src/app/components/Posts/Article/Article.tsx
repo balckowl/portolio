@@ -14,6 +14,7 @@ import { marked } from "marked"
 import Prism from 'prismjs'
 import "prism-themes/themes/prism-one-light.min.css"
 import NotFound from "../../../not-found"
+import Link from "next/link"
 
 interface PostDataType {
     post_id?: number,
@@ -68,8 +69,8 @@ const Article = () => {
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/post/${id}`)
 
-        if(!res.ok){
-            setPostData("NotFound")
+        if (!res.ok) {
+            setPostData({})
             setIsLoading(false)
             return
         }
@@ -131,10 +132,14 @@ const Article = () => {
             method: "DELETE",
         })
 
-        router.push(`/${session?.user?.id}`)
+        router.push(`/${session?.user?.uid}`)
         router.refresh()
 
     }
+
+    // if(typeof Number(id) == "number"){
+    //     return <NotFound />
+    // }
 
     useEffect(() => {
         getDetailPost(Number(id))
@@ -146,7 +151,7 @@ const Article = () => {
 
     console.log(postData)
 
-    if(postData === "NotFound"){
+    if (Object.keys(postData).length === 0) {
         return <NotFound />
     }
 
@@ -171,15 +176,17 @@ const Article = () => {
                                     <div>{`${uYear}/${uMonth + 1}/${uDate}`}</div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <Avatar>
-                                    <AvatarImage src={postData.usericon} alt={postData.username} />
-                                    <AvatarFallback>{postData.username}</AvatarFallback>
-                                </Avatar>
-                                <p className="hidden sm:block">{postData.username}</p>
-                            </div>
+                            <Link href={`/${postData.user_id}`}>
+                                <div className="flex items-center gap-3">
+                                    <Avatar>
+                                        <AvatarImage src={postData.usericon} alt={postData.username} />
+                                        <AvatarFallback>{postData.username}</AvatarFallback>
+                                    </Avatar>
+                                    <p className="hidden sm:block">{postData.username}</p>
+                                </div>
+                            </Link>
                         </div>
-                        {session?.user?.id === postData.user_id && (
+                        {session?.user?.uid === postData.user_id && (
                             <div className="flex gap-2 justify-end mb-[15px]">
                                 {!isEditting ? (
                                     <Button onClick={() => setIsEditting(true)}>編集</Button>

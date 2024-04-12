@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button"
+import { authOptions } from "@/lib/next-auth/options"
+import { getServerSession } from "next-auth"
 import Image from "next/image"
+import Link from "next/link"
 
-const Hero = async() => {
+const Hero = async () => {
+
+    const session = await getServerSession(authOptions)
 
     return (
         <div className="h-[650px] sm:h-[500px] bg-[#eee]">
@@ -11,7 +16,19 @@ const Hero = async() => {
                         <h2 className="sm:hidden text-[25px] lg:text-[45px] font-bold">失敗したものだってアピールポイント</h2>
                         <h2 className="text-[25px] lg:text-[45px] font-bold hidden sm:block">失敗したものだって<br />アピールポイント</h2>
                         <p>挫折ポートフォリオ</p>
-                        <Button>はじめる</Button>
+                        {!session ? (
+                            <Button>
+                                <Link href="/users/sign-in">
+                                    はじめる
+                                </Link>
+                            </Button>
+                        ) : (
+                            <Button>
+                                <Link href={`/${session?.user.uid}`}>
+                                    My Portolioへ
+                                </Link>
+                            </Button>
+                        )}
                     </div>
                     <div className="w-4/5 sm:w-1/2 order-1 sm:order-2">
                         <Image src="/images/hero/hero.png" width={500} height={500} alt="hero" />

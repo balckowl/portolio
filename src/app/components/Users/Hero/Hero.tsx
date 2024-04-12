@@ -1,13 +1,20 @@
-import { auth } from "../../../../auth"
+
+import NotFound from "@/app/not-found"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { authOptions } from "@/lib/next-auth/options"
 import { Twitter } from "lucide-react"
+import { getServerSession } from "next-auth"
 
 import Link from "next/link"
 
 const getUserProfile = async (userId: string) => {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/${userId}`)
+
+    if(!res.ok){
+        return {}
+    }
 
     const data = await res.json()
 
@@ -16,11 +23,15 @@ const getUserProfile = async (userId: string) => {
 
 const Hero = async ({ userId }: { userId: string }) => {
 
-    const session = await auth()
+    const session = await getServerSession(authOptions)
 
     const userProfile = await getUserProfile(userId)
 
     console.log(userProfile)
+
+    if(Object.keys(userProfile).length == 0){
+        return <NotFound />
+    }
 
     return (
         <div className="h-[400px] lg:h-[300px]">
@@ -43,8 +54,8 @@ const Hero = async ({ userId }: { userId: string }) => {
                             <p className="text-[13px] sm:text-[16px]">{userProfile.bio}</p>
                         </div>
                     </div>
-                    {session?.user?.id === userId && (
-                        <Link href={`/${session?.user?.id}/edit`}>
+                    {session?.user?.uid === userId && (
+                        <Link href={`/${session?.user?.uid}/edit`}>
                             <Button>
                                 編集する
                             </Button>

@@ -1,7 +1,12 @@
+import NotFound from "@/app/not-found"
 import Link from "next/link"
 
 const getAllPosts = async (userId: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/posts/${userId}`)
+
+    if(!res.ok){
+        return []
+    }
 
     const data = await res.json()
 
@@ -29,6 +34,10 @@ const PostList = async ({ userId }: { userId: string }) => {
         }
         return '';
     };
+
+    if(PostsData.length == 0){
+        return
+    }
 
     return (
         <div className="py-[90px] lg:py-[140px]">

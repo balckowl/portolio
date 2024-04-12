@@ -28,7 +28,7 @@ const Header = ({ title, content }: { title: string, content: string }) => {
         if (title && content && emoji) {
             const loading = toast.loading("送信中...");
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/post/${session?.user?.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/post/${session?.user?.uid}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const Header = ({ title, content }: { title: string, content: string }) => {
 
             toast.dismiss(loading);
             toast.success("送信できました。");
-            router.push(`/${session?.user?.id}`);
+            router.push(`/${session?.user?.uid}`);
             router.refresh();
         } else {
             toast.error("必要な情報が足りません。");
