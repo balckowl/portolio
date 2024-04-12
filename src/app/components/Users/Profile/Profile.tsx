@@ -31,6 +31,11 @@ const Profile = () => {
 
     const router = useRouter()
 
+    const form = useForm<formType>({
+        resolver: zodResolver(formShema),
+        defaultValues: profileData,
+    })
+
     const getUserProfile = async (userId: string) => {
 
         setIsSubmitting(true)
@@ -39,9 +44,8 @@ const Profile = () => {
         const data = await res.json()
 
         setProfileData({ name: data.username, bio: data.bio, x: data.X })
-
+        console.log(data)
         setIsSubmitting(true)
-        console.log(profileData)
     }
 
     useEffect(() => {
@@ -50,11 +54,12 @@ const Profile = () => {
         }
     }, [session])
 
+    useEffect(() => {
+        form.setValue("name", profileData.name)
+        form.setValue("bio", profileData.bio)
+        form.setValue("x", profileData.x)
+    }, [profileData])
 
-    const form = useForm<formType>({
-        resolver: zodResolver(formShema),
-        defaultValues: profileData
-    })
 
     const onSubmit = async (formData: formType) => {
 

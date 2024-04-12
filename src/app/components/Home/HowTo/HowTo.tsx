@@ -13,7 +13,7 @@ const HowTo = () => {
                             <div>
                                 <Image src="/images/howto/door.png" width={200} height={200} alt="write" className="mx-auto" />
                             </div>
-                            <p className="text-center">挫折した作品についての記事を書こう</p>
+                            <p className="text-center">まずはサイトにログインをしよう</p>
                         </div>
                         <div className="col-span-1 shadow-md rounded-[10px] p-3 bg-white">
                             <h4 className="text-[30px] text-center">記事を書く</h4>
@@ -27,7 +27,7 @@ const HowTo = () => {
                             <div>
                                 <Image src="/images/howto/post.png" width={200} height={200} alt="write" className="mx-auto" />
                             </div>
-                            <p className="text-center">挫折した作品についての記事を書こう</p>
+                            <p className="text-center">かけた記事を皆に見せよう</p>
                         </div>
                     </div>
                 </div>
