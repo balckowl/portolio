@@ -56,7 +56,7 @@ const Editer = ({ title, content, setTitle, setContent }: { title: string, conte
                                 <textarea name="" className="h-full w-full focus:outline-none resize-none" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
                                 <div onClick={() => document.getElementById('file-input')?.click()} className="bg-yellow-200 w-12 h-12 flex items-center justify-center absolute bottom-[10px] right-[10px] rounded-full cursor-pointer">
                                     <Image />
-                                    <input type="file" id="file-input" className="hidden" onChange={handleImageChange} />
+                                    <input type="file" id="file-input" className="hidden" onChange={handleImageChange} accept=".jpg,.gif,.png,image/gif,image/jpeg,image/png"/>
                                 </div>
                             </div>
                         </TabsContent>
@@ -70,8 +70,8 @@ const Editer = ({ title, content, setTitle, setContent }: { title: string, conte
                         </TabsContent>
                     </div>
                     <div className="flex justify-end items-center gap-3">
-                        <Link href="/posts/18">
-                            <div className="bg-white py-1 px-3 flex items-center gap-3 cursor-pointer">
+                        <Link href="/posts/2">
+                            <div className="bg-white py-1 px-3 flex items-center gap-3 cursor-pointer rounded-[10px]">
                                 <CircleHelp width={20} height={20} />
                                 <p>このサイトで使えるマークダウン</p>
                             </div>

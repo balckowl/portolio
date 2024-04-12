@@ -2,10 +2,10 @@
 import ReactMarkdown from "react-markdown"
 import "../Editer/Edit.css"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { RefreshCw } from "lucide-react"
+import { CircleHelp, Image, RefreshCw } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { notFound, useParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import Loading from "@/app/loading"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
@@ -15,6 +15,9 @@ import Prism from 'prismjs'
 import "prism-themes/themes/prism-one-light.min.css"
 import NotFound from "../../../not-found"
 import Link from "next/link"
+import { storage } from "@/lib/firebase/client"
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface PostDataType {
     post_id?: number,
@@ -62,6 +65,27 @@ const Article = () => {
     useEffect(() => {
         Prism.highlightAll()
     })
+
+    const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+
+        if (e.target.files) {
+            const file = e.target.files[0]
+
+            const storageRef = ref(storage, `images/${file?.name}`);
+
+            if (file) {
+                await uploadBytes(storageRef, file).then(() => {
+                    console.log('Uploaded a blob or file!');
+                })
+            }
+
+            const url = await getDownloadURL(storageRef)
+
+            const imageMarkdown = `![](${url})`
+
+            setDescription(description + imageMarkdown)
+        }
+    }
 
     const getDetailPost = async (id: number) => {
 
@@ -137,10 +161,6 @@ const Article = () => {
 
     }
 
-    // if(typeof Number(id) == "number"){
-    //     return <NotFound />
-    // }
-
     useEffect(() => {
         getDetailPost(Number(id))
     }, [])
@@ -158,7 +178,7 @@ const Article = () => {
     return (
         <div className="py-[100px] flex justify-center">
             <Toaster />
-            <div className="w-[92%] sm:container flex justify-center">
+            <Tabs className="w-[92%] sm:container flex justify-center" defaultValue="markdown">
                 <div className="w-full lg:w-[60%]">
                     <div className="mb-[10px]">
                         {!isEditting ? (
@@ -167,7 +187,7 @@ const Article = () => {
                             <input type="text" placeholder="ここにタイトルを入力してください。" className="w-full bg-[#eee] focus:outline-none text-[18px] md:text-[25px] lg:text-[30px]" value={title} onChange={(e) => setTitle(e.target.value)} />
                         )}
                     </div>
-                    <div className="min-h-[400px] bg-white p-5 rounded-[5px]">
+                    <div className="min-h-[400px] bg-white p-5 rounded-[5px] mb-[10px]">
                         <div className="border-[1px] border-[#eee] rounded-[5px] flex justify-between p-3 mb-[15px]">
                             <div className="flex-col sm:flex-row flex sm:items-center sm:gap-3">
                                 <div className="text-[13px]">{`${cYear}/${cMonth + 1}/${cDate}`}</div>
@@ -205,12 +225,40 @@ const Article = () => {
                                     </ReactMarkdown> */}
                                 </div>
                             ) : (
-                                <textarea value={description} className="w-full h-[400px] resize-none focus:outline-none" onChange={(e) => setDescription(e.target.value)}></textarea>
+                                <div>
+                                    <TabsContent className="preview" value="password">
+                                        <div dangerouslySetInnerHTML={{ __html: marked.parse(description) }} className='post-text-box line-numbers language-javascript' />
+                                        {/* <ReactMarkdown>
+                                        {description}
+                                    </ReactMarkdown> */}
+                                    </TabsContent>
+                                    <TabsContent className="relative" value="markdown">
+                                        <textarea value={description} className="w-full h-[400px] resize-none focus:outline-none" onChange={(e) => setDescription(e.target.value)}></textarea>
+                                        <div onClick={() => document.getElementById('file-input')?.click()} className="bg-yellow-200 w-12 h-12 flex items-center justify-center absolute bottom-[10px] right-[10px] rounded-full cursor-pointer">
+                                            <Image />
+                                            <input type="file" id="file-input" className="hidden" onChange={handleImageChange} accept=".jpg,.gif,.png,image/gif,image/jpeg,image/png"/>
+                                        </div>
+                                    </TabsContent>
+                                </div>
                             )}
                         </div>
                     </div>
+                    {isEditting && (
+                        <div className="flex justify-end items-center gap-3">
+                            <Link href="/posts/2">
+                                <div className="bg-white py-1 px-3 flex items-center gap-3 cursor-pointer rounded-[5px]">
+                                    <CircleHelp width={20} height={20} />
+                                    <p>このサイトで使えるマークダウン</p>
+                                </div>
+                            </Link>
+                            <TabsList>
+                                <TabsTrigger value="markdown" >Markdown</TabsTrigger>
+                                <TabsTrigger value="password" >Preview</TabsTrigger>
+                            </TabsList>
+                        </div>
+                    )}
                 </div>
-            </div>
+            </Tabs>
         </div>
     )
 }

@@ -15,6 +15,7 @@ import { AlignJustify } from "lucide-react";
 import { signOut as signOutNextAuth, useSession } from "next-auth/react";
 import { signOut as signOutFirebase } from "firebase/auth";
 import { auth } from "@/lib/firebase/client"
+import Image from "next/image";
 
 const Header = () => {
 
@@ -29,9 +30,11 @@ const Header = () => {
     return (
         <div className="h-[80px]">
             <div className="container flex justify-between h-full items-center">
-                <h1 className="text-4xl font-bold">
-                    <Link href="/">Portolio</Link>
-                </h1>
+                <Link href="/">
+                    <h1 className="text-4xl font-bold">
+                        Portolio
+                    </h1>
+                </Link>
                 {!session ? (
                     <Button>
                         <Link href="/users/sign-in">
