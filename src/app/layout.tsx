@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       {
         width: "1200",
         height: "630",
-        url:  `${process.env.NEXT_PUBLIC_URL}/images/ogps/ogp.png`
+        url:  `${process.env.NEXT_PUBLIC_URL}/ogps/ogp.png`
       }
     ],
     locale: "jp",
