@@ -4,7 +4,7 @@ import "../Editer/Edit.css"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { RefreshCw } from "lucide-react"
 import { useSession } from "next-auth/react"
-import { useParams } from "next/navigation"
+import { notFound, useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Loading from "@/app/loading"
 import { Button } from "@/components/ui/button"
@@ -13,6 +13,7 @@ import { Toaster, toast } from "react-hot-toast"
 import { marked } from "marked"
 import Prism from 'prismjs'
 import "prism-themes/themes/prism-one-light.min.css"
+import NotFound from "../../../not-found"
 
 interface PostDataType {
     post_id?: number,
@@ -34,8 +35,8 @@ const Article = () => {
     const { id } = params
 
     const { data: session, status } = useSession()
-    const [isLoading, setIsLoading] = useState(false)
-    const [postData, setPostData] = useState<PostDataType>({})
+    const [isLoading, setIsLoading] = useState(true)
+    const [postData, setPostData] = useState<PostDataType | any>({})
     const [isEditting, setIsEditting] = useState<boolean>(false)
 
     let createdAt: Date;
@@ -66,6 +67,13 @@ const Article = () => {
         setIsLoading(true)
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/post/${id}`)
+
+        if(!res.ok){
+            setPostData("NotFound")
+            setIsLoading(false)
+            return
+        }
+
         const data = await res.json()
 
         setPostData(data)
@@ -134,6 +142,12 @@ const Article = () => {
 
     if (isLoading) {
         return <Loading />
+    }
+
+    console.log(postData)
+
+    if(postData === "NotFound"){
+        return <NotFound />
     }
 
     return (

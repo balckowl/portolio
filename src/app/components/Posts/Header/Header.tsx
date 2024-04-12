@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const Header = ({ title, content }: { title: string, content: string }) => {
 
@@ -61,7 +62,9 @@ const Header = ({ title, content }: { title: string, content: string }) => {
         <div className="h-[80px] bg-white">
             <Toaster />
             <div className="container flex justify-between h-full items-center">
-                <h1 className="text-4xl font-bold">Portfolio</h1>
+                <h1 className="text-4xl font-bold">
+                    <Link href="/">Portolio</Link>
+                </h1>
                 <Dialog>
                     <DialogTrigger className="bg-black text-white px-[14px] py-[10px] rounded-[5px] text-[15px]">
                         投稿する
