@@ -1,4 +1,4 @@
-import { auth, signOut } from "../../../../auth"
+"use client"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -12,15 +12,18 @@ import {
 } from "@/components/ui/sheet"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AlignJustify } from "lucide-react";
+import { signOut as signOutNextAuth, useSession } from "next-auth/react";
+import { signOut as signOutFirebase } from "firebase/auth";
+import { auth } from "@/lib/firebase/client"
 
-const Header = async () => {
+const Header = () => {
 
-    const session = await auth()
+    const { data: session, status } = useSession()
 
     const logOut = async () => {
-        "use server"
 
-        await signOut({ redirectTo: '/' })
+        await signOutFirebase(auth)
+        signOutNextAuth({ callbackUrl: "/" })
     }
 
     return (
@@ -45,8 +48,8 @@ const Header = async () => {
                                 <SheetContent>
                                     <div className="flex items-center gap-5">
                                         <Avatar>
-                                            {session?.user?.image && (
-                                                <AvatarImage src={session?.user?.image} alt={session?.user?.name ?? ""} />
+                                            {session?.user?.photoURL && (
+                                                <AvatarImage src={session?.user?.photoURL} alt={session?.user?.name ?? ""} />
                                             )}
                                             <AvatarFallback>{session?.user?.name}</AvatarFallback>
                                         </Avatar>
@@ -56,20 +59,18 @@ const Header = async () => {
                                     </div>
                                     <div>
                                         <ul className="p-4 flex flex-col gap-5">
-                                            <Link href={`/${session?.user?.id}`}>
+                                            <Link href={`/${session?.user?.uid}`}>
                                                 <li>My Portolio</li>
                                             </Link>
-                                            <Link href={`/${session?.user?.id}/edit`}>
+                                            <Link href={`/${session?.user?.uid}/edit`}>
                                                 <li>プロフィール設定</li>
                                             </Link>
                                             <Link href={`/posts/edit`}>
-                                                <li>記事を投稿</li>
+                                                <li>記事を書く</li>
                                             </Link>
-                                            <form action={logOut}>
-                                                <button>
-                                                    <li>ログアウト</li>
-                                                </button>
-                                            </form>
+                                            <div onClick={logOut} className="cursor-pointer">
+                                                <li>ログアウト</li>
+                                            </div>
                                         </ul>
                                     </div>
                                 </SheetContent>
@@ -79,8 +80,8 @@ const Header = async () => {
                             <Popover>
                                 <PopoverTrigger>
                                     <Avatar>
-                                        {session?.user?.image && (
-                                            <AvatarImage src={session?.user?.image} alt={session?.user?.name ?? ""} />
+                                        {session?.user?.photoURL && (
+                                            <AvatarImage src={session?.user?.photoURL} alt={session?.user?.name ?? ""} />
                                         )}
                                         <AvatarFallback>{session?.user?.name}</AvatarFallback>
                                     </Avatar>
@@ -88,10 +89,10 @@ const Header = async () => {
                                 <PopoverContent className="w-full p-0">
                                     <h2 className="p-4 border-b-[1px] border-[#eee] font-bold">{session?.user?.name}</h2>
                                     <ul className="p-4 flex flex-col gap-3">
-                                        <Link href={`/${session?.user?.id}`}>
+                                        <Link href={`/${session?.user?.uid}`}>
                                             <li>My Portolio</li>
                                         </Link>
-                                        <Link href={`/${session?.user?.id}/edit`}>
+                                        <Link href={`/${session?.user?.uid}/edit`}>
                                             <li>プロフィール設定</li>
                                         </Link>
                                         <form action={logOut}>
@@ -104,7 +105,7 @@ const Header = async () => {
                             </Popover>
                             <Link href="/posts/edit">
                                 <Button>
-                                    投稿する
+                                    記事を書く
                                 </Button>
                             </Link>
                         </div>

@@ -39,19 +39,16 @@ const Profile = () => {
         const data = await res.json()
 
         setProfileData({ name: data.username, bio: data.bio, x: data.X })
+
         setIsSubmitting(true)
         console.log(profileData)
     }
 
     useEffect(() => {
         if (session) {
-            getUserProfile(String(session?.user?.id))
+            getUserProfile(String(session?.user?.uid))
         }
     }, [session])
-
-    useEffect(() => {
-        form.reset(profileData)
-    }, [profileData])
 
 
     const form = useForm<formType>({
@@ -67,7 +64,7 @@ const Profile = () => {
 
         const { name, x, bio } = formData
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/${session?.user?.id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/${session?.user?.uid}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -80,7 +77,7 @@ const Profile = () => {
         toast.dismiss(loading)
         setIsLoading(false)
         toast.success("更新完了")
-        router.push(`/${session?.user?.id}`)
+        router.push(`/${session?.user?.uid}`)
         //ページ遷移後、リフレッシュ
         router.refresh()
 
@@ -109,8 +106,8 @@ const Profile = () => {
                     <div className="bg-white lg:flex px-5 py-10 gap-3 rounded-[5px]">
                         <div className="w-full lg:w-[30%] flex justify-center ">
                             <Avatar className="w-[100px] h-[100px]">
-                                {status === "authenticated" && session?.user?.image && (
-                                    <AvatarImage src={session.user.image} alt={session.user.name ?? ""} />
+                                {status === "authenticated" && session?.user?.photoURL && (
+                                    <AvatarImage src={session.user.photoURL} alt={session.user.name ?? ""} />
                                 )}
                                 <AvatarFallback>{session?.user?.email}</AvatarFallback>
                             </Avatar>
