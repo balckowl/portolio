@@ -102,7 +102,7 @@ const Profile = () => {
 
     return (
         <div>
-            <div className="container flex justify-center">
+            <div className="w-[95%] mx-auto md:container flex justify-center">
                 <Toaster />
                 <div className="w-full lg:w-[60%] pt-[60px] pb-[80px]">
                     <div className="pb-[60px]">

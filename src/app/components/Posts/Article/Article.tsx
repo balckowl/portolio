@@ -10,14 +10,13 @@ import Loading from "@/app/loading"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { Toaster, toast } from "react-hot-toast"
-import { marked } from "marked"
-import Prism from 'prismjs'
-import "prism-themes/themes/prism-one-light.min.css"
 import NotFound from "../../../not-found"
 import Link from "next/link"
 import { storage } from "@/lib/firebase/client"
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface PostDataType {
     post_id?: number,
@@ -30,6 +29,20 @@ interface PostDataType {
     username?: string,
     usericon?: string,
 }
+
+
+interface CodeBlockProps {
+    value?: string;
+    language?: string;
+}
+
+const CodeBlock = ({ value = '', language = 'javascript' }: CodeBlockProps) => {
+    return (
+        <SyntaxHighlighter language={language} style={oneLight}>
+            {value}
+        </SyntaxHighlighter>
+    );
+};
 
 
 const Article = () => {
@@ -61,10 +74,6 @@ const Article = () => {
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
-
-    useEffect(() => {
-        Prism.highlightAll()
-    })
 
     const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
 
@@ -219,18 +228,28 @@ const Article = () => {
                         <div>
                             {!isEditting ? (
                                 <div className="preview">
-                                    <div dangerouslySetInnerHTML={{ __html: marked.parse(description) }} className='post-text-box line-numbers language-javascript' />
-                                    {/* <ReactMarkdown>
+                                    <ReactMarkdown
+                                        components={{
+                                            code({ node, className, children, ...props }) {
+                                                return <CodeBlock value={String(children)} {...props} />;
+                                            }
+                                        }}
+                                    >
                                         {description}
-                                    </ReactMarkdown> */}
+                                    </ReactMarkdown>
                                 </div>
                             ) : (
                                 <div>
                                     <TabsContent className="preview" value="password">
-                                        <div dangerouslySetInnerHTML={{ __html: marked.parse(description) }} className='post-text-box line-numbers language-javascript' />
-                                        {/* <ReactMarkdown>
-                                        {description}
-                                    </ReactMarkdown> */}
+                                        <ReactMarkdown
+                                            components={{
+                                                code({ node, className, children, ...props }) {
+                                                    return <CodeBlock value={String(children)} {...props} />;
+                                                }
+                                            }}
+                                        >
+                                            {description}
+                                        </ReactMarkdown>
                                     </TabsContent>
                                     <TabsContent className="relative" value="markdown">
                                         <textarea value={description} className="w-full h-[400px] resize-none focus:outline-none" onChange={(e) => setDescription(e.target.value)}></textarea>
