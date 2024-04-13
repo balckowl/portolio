@@ -1,7 +1,3 @@
-import { Kosugi_Maru } from "next/font/google"
-
-const kosugimaru = Kosugi_Maru({ weight: "400" });
-
 const Loading = () => {
     return (
         <div className="flex text-center items-center min-h-[calc(100vh-80px-60px)] bg-white">
@@ -13,7 +9,7 @@ const Loading = () => {
                     <div className="relative h-[100px]">
 
                         <div className="absolute bottom-[40px] left-[-15px]">
-                            <div className={`flex justify-center relative w-[250px] mx-auto h-[45px] left-[70px] ${kosugimaru.className}`}>
+                            <div className={`flex justify-center relative w-[250px] mx-auto h-[45px] left-[70px]`}>
                                 <div className="bg-gray-400 text-white w-[45px] h-[45px] rounded-[20px] flex items-center justify-center absolute bottom-0 left-0">挫</div>
                                 <div className="bg-gray-400 text-white w-[45px] h-[45px] rounded-[20px] flex items-center justify-center absolute bottom-0 left-8">折</div>
                                 <div className="bg-gray-400 text-white w-[45px] h-[45px] rounded-[20px] flex items-center justify-center absolute bottom-0 left-16">し</div>
@@ -24,7 +20,7 @@ const Loading = () => {
                             </div>
                         </div>
                         <div className="absolute bottom-[72px] left-[90px]">
-                            <div className={`flex justify-center relative w-[190px] mx-auto h-[45px] ${kosugimaru.className}`}>
+                            <div className={`flex justify-center relative w-[190px] mx-auto h-[45px]`}>
                                 <div className="bg-gray-400 text-white w-[45px] h-[45px] rounded-[20px] flex items-center justify-center absolute left-0 bottom-0">読</div>
                                 <div className="bg-gray-400 text-white w-[45px] h-[45px] rounded-[20px] flex items-center justify-center absolute left-8 bottom-0">み</div>
                                 <div className="bg-gray-400 text-white w-[45px] h-[45px] rounded-[20px] flex items-center justify-center absolute left-16 bottom-0">込</div>
