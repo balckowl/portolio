@@ -19,6 +19,7 @@ import Link from "next/link"
 import { signOut as signOutNextAuth, useSession } from "next-auth/react";
 import { signOut as signOutFirebase } from "firebase/auth";
 import { auth } from "@/lib/firebase/client"
+import Image from "next/image"
 
 
 
@@ -33,10 +34,12 @@ const Header = () => {
     }
 
     return (
-        <div className="h-[80px] bg-white">
+        <div className="h-[60px] bg-white">
             <div className="container flex justify-between h-full items-center">
                 <h1 className="text-4xl font-bold">
-                    <Link href="/">Portolio</Link>
+                    <Link href="/">
+                        <Image src={"/images/logo/logo.png"} width={160} height={50} alt={"logo"} />
+                    </Link>
                 </h1>
                 {session ? (
                     <div>

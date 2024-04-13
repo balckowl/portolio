@@ -30,11 +30,11 @@ const Header = () => {
     return (
         <div className="h-[80px]">
             <div className="container flex justify-between h-full items-center">
-                <Link href="/">
-                    <h1 className="text-4xl font-bold">
-                        Portolio
-                    </h1>
-                </Link>
+                <h1 className="text-4xl font-bold">
+                    <Link href="/">
+                        <Image src={"/images/logo/logo.png"} width={160} height={50} alt={"logo"} />
+                    </Link>
+                </h1>
                 {!session ? (
                     <Button>
                         <Link href="/users/sign-in">

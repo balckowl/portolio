@@ -176,7 +176,7 @@ const Article = () => {
     }
 
     return (
-        <div className="py-[100px] flex justify-center">
+        <div className="py-[100px] flex justify-center min-h-[calc(100vh-80px-60px)]">
             <Toaster />
             <Tabs className="w-[92%] sm:container flex justify-center" defaultValue="markdown">
                 <div className="w-full lg:w-[60%]">
@@ -236,7 +236,7 @@ const Article = () => {
                                         <textarea value={description} className="w-full h-[400px] resize-none focus:outline-none" onChange={(e) => setDescription(e.target.value)}></textarea>
                                         <div onClick={() => document.getElementById('file-input')?.click()} className="bg-yellow-200 w-12 h-12 flex items-center justify-center absolute bottom-[10px] right-[10px] rounded-full cursor-pointer">
                                             <Image />
-                                            <input type="file" id="file-input" className="hidden" onChange={handleImageChange} accept=".jpg,.gif,.png,image/gif,image/jpeg,image/png"/>
+                                            <input type="file" id="file-input" className="hidden" onChange={handleImageChange} accept=".jpg,.gif,.png,image/gif,image/jpeg,image/png" />
                                         </div>
                                     </TabsContent>
                                 </div>
@@ -245,10 +245,9 @@ const Article = () => {
                     </div>
                     {isEditting && (
                         <div className="flex justify-end items-center gap-3">
-                            <Link href="/posts/2">
-                                <div className="bg-white py-1 px-3 flex items-center gap-3 cursor-pointer rounded-[5px]">
+                            <Link href="/posts/2" target="_blank">
+                                <div className="bg-white py-2 px-2 flex items-center gap-3 cursor-pointer rounded-[5px]">
                                     <CircleHelp width={20} height={20} />
-                                    <p>このサイトで使えるマークダウン</p>
                                 </div>
                             </Link>
                             <TabsList>

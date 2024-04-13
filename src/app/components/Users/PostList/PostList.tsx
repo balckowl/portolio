@@ -1,10 +1,11 @@
 import NotFound from "@/app/not-found"
+import Image from "next/image"
 import Link from "next/link"
 
 const getAllPosts = async (userId: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/posts/${userId}`)
 
-    if(!res.ok){
+    if (!res.ok) {
         return []
     }
 
@@ -24,18 +25,21 @@ const PostList = async ({ userId }: { userId: string }) => {
 
     // const { id } = params
     const PostsData = await getAllPosts(userId)
-    
+
 
 
     const renderEmoji = (emoji: string) => {
-        if (emoji) {
+        if (emoji === "/images/users/face1.png" || emoji === "/images/users/face2.png" || emoji === "/images/users/face3.png" || emoji === "/images/users/face4.png" || emoji === "/images/users/face5.png") {
+
+            return <Image src={`${emoji}`} width={75} height={75} alt={"icon"} className="mx-auto"/>
+
+        } else {
             const codePoints = emoji.split('-').map(cp => parseInt(cp, 16));
             return String.fromCodePoint(...codePoints);
         }
-        return '';
     };
 
-    if(PostsData.length == 0){
+    if (PostsData.length == 0) {
         return
     }
 

@@ -104,8 +104,8 @@ const Profile = () => {
         <div>
             <div className="container flex justify-center">
                 <Toaster />
-                <div className="w-full lg:w-[60%] pb-[100px]">
-                    <div className="py-[30px]">
+                <div className="w-full lg:w-[60%] pt-[60px] pb-[80px]">
+                    <div className="pb-[60px]">
                         <h2 className="text-[30px] font-bold text-center">Profile</h2>
                     </div>
                     <div className="bg-white lg:flex px-5 py-10 gap-3 rounded-[5px]">
