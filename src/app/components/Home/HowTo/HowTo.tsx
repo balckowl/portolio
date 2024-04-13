@@ -27,7 +27,7 @@ const HowTo = () => {
                             <div>
                                 <Image src="/images/howto/post.png" width={200} height={200} alt="write" className="mx-auto" />
                             </div>
-                            <p className="text-center">かけた記事を皆に見せよう</p>
+                            <p className="text-center">書いた記事を皆に見せよう</p>
                         </div>
                     </div>
                 </div>

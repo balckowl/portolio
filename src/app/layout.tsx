@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import SessionProvider from "./components/Auth/SessionProvider/SessionProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const notoSansJP = Noto_Sans_JP({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Portolio",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       {
         width: "1200",
         height: "630",
-        url:  `${process.env.NEXT_PUBLIC_URL}/ogps/ogp.png`
+        url: `${process.env.NEXT_PUBLIC_URL}/ogps/ogp.png`
       }
     ],
     locale: "jp",
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionProvider>
-        <body className={inter.className}>
+        <body className={notoSansJP.className}>
           <main>{children}</main>
         </body>
       </SessionProvider>

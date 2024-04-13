@@ -2,18 +2,15 @@
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { useSession, signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { signIn } from "next-auth/react"
+import { useState } from "react"
 import { signInWithPopup, GithubAuthProvider } from "firebase/auth"
 import { auth } from "@/lib/firebase/client"
-import Loading from "@/app/loading"
+import Loading from "../../components/Auth/Loading/Loading"
 
 const SignInPage = () => {
 
-    const { data: session, status } = useSession()
     const [isLoading, setIsLoading] = useState(false)
-    const router = useRouter()
     const githubProvider = new GithubAuthProvider
 
 
@@ -41,7 +38,7 @@ const SignInPage = () => {
         })
     }
 
-    if(isLoading){
+    if (isLoading) {
         return <Loading />
     }
 
