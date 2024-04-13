@@ -1,5 +1,6 @@
 "use client"
 import Editer from "@/app/components/Posts/Editer/Editer"
+import Footer from "@/app/components/Posts/Footer/Footer"
 import Header from "@/app/components/Posts/Header/Header"
 import { useState } from "react"
 
@@ -13,6 +14,7 @@ const EditPage = () => {
         <div className="bg-[#eee] min-h-screen">
             <Header title={title} content={content}/>
             <Editer title={title} content={content} setTitle={setTitle} setContent={setContent}/>
+            <Footer />
         </div>
     )
 }

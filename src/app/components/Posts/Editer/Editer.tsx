@@ -42,9 +42,10 @@ const Editer = ({ title, content, setTitle, setContent }: { title: string, conte
     useEffect(() => {
         Prism.highlightAll()
     }, [change, title])
+    
 
     return (
-        <div className="py-[100px] flex justify-center">
+        <div className="py-[100px] flex justify-center min-h-[calc(100vh-80px-60px)]">
             <div className="w-[92%] sm:container flex justify-center">
                 <Tabs className="w-full lg:w-[60%]" defaultValue="markdown">
                     <div className="mb-[5px]">
@@ -70,10 +71,9 @@ const Editer = ({ title, content, setTitle, setContent }: { title: string, conte
                         </TabsContent>
                     </div>
                     <div className="flex justify-end items-center gap-3">
-                        <Link href="/posts/2">
-                            <div className="bg-white py-1 px-3 flex items-center gap-3 cursor-pointer rounded-[10px]">
+                        <Link href="/posts/2" target="_blank">
+                            <div className="bg-white py-2 px-2 flex items-center gap-3 cursor-pointer rounded-[10px]">
                                 <CircleHelp width={20} height={20} />
-                                <p>このサイトで使えるマークダウン</p>
                             </div>
                         </Link>
                         <TabsList>
